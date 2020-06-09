@@ -16,7 +16,7 @@ namespace Rox.Blog.EntityFrameworkCore
             var configuration = BuildConfiguration();
 
             var builder = new DbContextOptionsBuilder<BlogMigrationsDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("Default"));
+                .UseNpgsql(configuration.GetConnectionString("Default"));
 
             return new BlogMigrationsDbContext(builder.Options);
         }

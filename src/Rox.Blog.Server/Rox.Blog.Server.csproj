@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Rox.Blog.Client\Rox.Blog.Client.csproj" />
+    <ProjectReference Include="..\Rox.Blog.EntityFrameworkCore.DbMigrations\Rox.Blog.EntityFrameworkCore.DbMigrations.csproj" />
+    <ProjectReference Include="..\Rox.Blog.HttpApi\Rox.Blog.HttpApi.csproj" />
     <ProjectReference Include="..\Rox.Blog.Shared\Rox.Blog.Shared.csproj" />
   </ItemGroup>
 

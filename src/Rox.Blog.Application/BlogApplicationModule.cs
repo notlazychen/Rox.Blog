@@ -1,21 +1,14 @@
-﻿using Volo.Abp.Account;
-using Volo.Abp.AutoMapper;
-using Volo.Abp.FeatureManagement;
+﻿using Volo.Abp.AutoMapper;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
-using Volo.Abp.TenantManagement;
 
 namespace Rox.Blog
 {
     [DependsOn(
         typeof(BlogDomainModule),
-        typeof(AbpAccountApplicationModule),
-        typeof(BlogApplicationContractsModule),
         typeof(AbpIdentityApplicationModule),
-        typeof(AbpPermissionManagementApplicationModule),
-        typeof(AbpTenantManagementApplicationModule),
-        typeof(AbpFeatureManagementApplicationModule)
+        typeof(AbpPermissionManagementApplicationModule)
         )]
     public class BlogApplicationModule : AbpModule
     {
