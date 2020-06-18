@@ -8,11 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Identity.Application" Version="2.9.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Rox.Blog.EntityFrameworkCore\Rox.Blog.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Rox.Blog.Application.Contracts\Rox.Blog.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Rox.Blog.Domain\Rox.Blog.Domain.csproj" />
   </ItemGroup>
 
 </Project>

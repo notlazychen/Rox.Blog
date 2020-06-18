@@ -1,33 +1,9 @@
-﻿using Rox.Blog.Localization;
-using Volo.Abp.Identity;
-using Volo.Abp.Localization;
-using Volo.Abp.Modularity;
-using Volo.Abp.Validation.Localization;
-using Volo.Abp.VirtualFileSystem;
-
-namespace Rox.Blog
+﻿namespace Rox.Blog
 {
-    [DependsOn(
-        typeof(AbpIdentityDomainSharedModule)
-        )]
-    public class BlogDomainSharedModule : AbpModule
+    /// <summary>
+    /// 包含常量,枚举和其他类型, 它不能包含实体,存储库,域服务或任何其他业务对象. 可以安全地与模块中的所有层使用. 此包也可以与第三方客户端使用.
+    /// </summary>
+    public class BlogDomainSharedModule : ModuleBase
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-            Configure<AbpVirtualFileSystemOptions>(options =>
-            {
-                options.FileSets.AddEmbedded<BlogDomainSharedModule>("Rox.Blog");
-            });
-
-            Configure<AbpLocalizationOptions>(options =>
-            {
-                options.Resources
-                    .Add<BlogResource>("en")
-                    .AddBaseTypes(typeof(AbpValidationResource))
-                    .AddVirtualJson("/Localization/Blog");
-                
-                options.DefaultResourceType = typeof(BlogResource);
-            });
-        }
     }
 }

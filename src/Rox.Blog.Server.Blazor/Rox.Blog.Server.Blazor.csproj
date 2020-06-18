@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Rox.Extensions.AspNetCore" Version="1.0.2" />
+    <PackageReference Include="AntDesign" Version="0.1.0-nightly-200617074142" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Rox.Blog.Application\Rox.Blog.Application.csproj" />
+    <ProjectReference Include="..\Rox.Blog.EntityFrameworkCore\Rox.Blog.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+</Project>

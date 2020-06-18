@@ -11,8 +11,4 @@
     <ProjectReference Include="..\Rox.Blog.Domain.Shared\Rox.Blog.Domain.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Volo.Abp.Identity.Domain" Version="2.9.0" />
-  </ItemGroup>
-
 </Project>

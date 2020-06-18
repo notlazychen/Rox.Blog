@@ -1,23 +1,13 @@
-﻿using Volo.Abp.AutoMapper;
-using Volo.Abp.Identity;
-using Volo.Abp.Modularity;
-using Volo.Abp.PermissionManagement;
-
-namespace Rox.Blog
+﻿namespace Rox.Blog
 {
-    [DependsOn(
-        typeof(BlogDomainModule),
-        typeof(AbpIdentityApplicationModule),
-        typeof(AbpPermissionManagementApplicationModule)
+    /// <summary>
+    /// 包含应用服务实现.
+    /// </summary>
+    [Dependency(
+        typeof(BlogApplicationContractsModule),
+        typeof(BlogDomainModule)
         )]
-    public class BlogApplicationModule : AbpModule
+    public class BlogApplicationModule :ModuleBase
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-            Configure<AbpAutoMapperOptions>(options =>
-            {
-                options.AddMaps<BlogApplicationModule>();
-            });
-        }
     }
 }
