@@ -8,9 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NLog.Extensions.Logging;
 
-namespace Rox.Blog.Server.Blazor
+namespace Rox.Blog.Server.BlazorServer
 {
     public class Program
     {
@@ -21,7 +20,6 @@ namespace Rox.Blog.Server.Blazor
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureLogging(loggingBuilder => loggingBuilder.ClearProviders().AddNLog())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
