@@ -1,0 +1,32 @@
+﻿@page "/post/{PostId:int}"
+@using BlazorBlog.Controllers;
+@layout NormLayout
+
+@inject NavigationManager _navigationManager;
+@inject IHttpClientFactory _httpClientFactory;
+
+<PageTitle>@_post.Title</PageTitle>
+
+<MRow>
+    <MCol>
+        <h2>@PostId</h2>
+        @_post.Content
+    </MCol>
+</MRow>
+
+@code {
+    [Parameter]
+    public int PostId { get; set; }
+
+    private PostDetailDto _post = new PostDetailDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var http = _httpClientFactory.CreateClient();
+        http.BaseAddress = new Uri(_navigationManager.BaseUri);
+
+        var post = await http.GetFromJsonAsync<PostDetailDto>($"/api/post/{PostId}");
+        if (post != null)
+            _post = post;
+    }
+}

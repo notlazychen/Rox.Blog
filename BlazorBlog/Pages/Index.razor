@@ -1,0 +1,69 @@
+﻿@page "/"
+@page "/index"
+@using BlazorBlog.Controllers;
+@layout NormLayout
+
+@inject NavigationManager _navigationManager;
+@inject IHttpClientFactory _httpClientFactory;
+
+<PageTitle>Index</PageTitle>
+
+<MRow>
+    <MCol>
+        <MList>
+         @foreach (var post in _posts)
+        {
+            <MListItem Href="@($"/post/{@post.Id}")">
+                <MListItemContent>
+                    <MListItemTitle>@post.Title</MListItemTitle>                
+                </MListItemContent>
+                <MListItemActionText>
+                    @post.PublishAt
+                </MListItemActionText>
+            </MListItem>
+            <MDivider />
+        }
+        </MList>
+        <h2>aaa</h2>
+        asdasdasasdasdasdasdssdasd
+    </MCol>
+</MRow>
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery(Name ="cate")]
+    public int? Categroy { get; set; }
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "s")]
+    public string? SearchKey { get; set; }
+
+    private List<PostSlimDto> _posts = new List<PostSlimDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetPosts();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        base.OnParametersSet();
+        await GetPosts();
+    }
+
+    private async Task GetPosts()
+    {
+        var http = _httpClientFactory.CreateClient();
+        http.BaseAddress = new Uri(_navigationManager.BaseUri);
+        string apiPath = "/api/post/";
+        if (Categroy != null)
+        {
+            apiPath += $"?cate={Categroy}";
+        }
+        if (SearchKey != null)
+        {
+            apiPath += $"?s={SearchKey}";
+        }
+        var posts = await http.GetFromJsonAsync<List<PostSlimDto>>(apiPath);
+        if (posts != null)
+            _posts = posts;
+    }
+}

@@ -1,0 +1,114 @@
+﻿@using BlazorBlog.Controllers;
+@using Microsoft.Extensions.Options;
+@inherits LayoutComponentBase
+
+@inject NavigationManager _navigationManager;
+@inject IHttpClientFactory _httpClientFactory;
+@inject IOptions<SiteOptions> _siteOptions;
+
+<PageTitle>BlazorBlog</PageTitle>
+
+<MApp Id="inspire">
+    <MAppBar App
+             Color="white"
+             Flat>
+        <MContainer Class="py-0 fill-height">
+            <a href="/" style="text-decoration:none">
+                <MAvatar Rounded="true">
+                    <MImage Src="/author.jpg" Alt="Roy"></MImage>
+                </MAvatar>
+                <MDivider Vertical Class="my-2"></MDivider>
+                <MLabel>@_siteOptions.Value.SiteName</MLabel>
+            </a>
+@*
+            @foreach (var link in _links)
+            {
+                <MButton Text>
+                    @link
+                </MButton>
+            }
+*@
+            <MSpacer></MSpacer>
+
+            <MResponsive MaxWidth="260" Class="lg">
+                <MTextField Dense
+                            Flat
+                            HideDetails="true"
+                            Rounded
+                            SoloInverted
+                            OnEnter="OnSearchEnter"
+                            @bind-Value="_searchKey"></MTextField>
+            </MResponsive>
+        </MContainer>
+    </MAppBar>
+
+    <MMain Class="grey lighten-3">
+        <MContainer>
+            <MRow>
+                <MCol Sm="10">
+                    <MSheet Rounded="@("lg")">
+                        <MContainer>
+                            @Body
+                        </MContainer>
+                    </MSheet>
+                </MCol>
+                <MCol Sm="2">
+                    <MSheet Rounded="@("lg")">
+                        <MList>
+                            @foreach (var cate in _categories)
+                            {
+                                <MListItem Href="@($"/index?cate={cate.Id}")">
+                                    <MListItemContent>
+                                        <MListItemTitle>
+                                            @cate.Text (@cate.PostsCount)
+                                        </MListItemTitle>
+                                    </MListItemContent>
+                                </MListItem>
+                            }
+
+                           @* <MDivider Class="my-2"></MDivider>
+
+                            <MListItem Link>
+                                <MListItemContent>
+                                    <MListItemTitle>
+                                        Refresh
+                                    </MListItemTitle>
+                                </MListItemContent>
+                            </MListItem>*@
+                        </MList>
+                    </MSheet>
+                </MCol>
+            </MRow>
+        </MContainer>
+    </MMain>
+</MApp>
+
+@code {
+    private string _searchKey = "";
+    List<string> _links = new List<string>
+    {
+        "Dashboard",
+        "Messages",
+        "Profile",
+        "Updates"
+    };
+
+    List<CategoryDto> _categories = new List<CategoryDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var http = _httpClientFactory.CreateClient();
+        http.BaseAddress = new Uri(_navigationManager.BaseUri);
+        var categories = await http.GetFromJsonAsync<List<CategoryDto>>("/api/category/");
+        if (categories != null)
+            _categories = categories;
+    }
+
+    private void OnSearchEnter()
+    {
+        if (!string.IsNullOrWhiteSpace(_searchKey))
+        {
+            _navigationManager.NavigateTo($"/index?s={_searchKey}");
+        }
+    }
+}
